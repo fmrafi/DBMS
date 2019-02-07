@@ -1,0 +1,29 @@
+create database bd
+
+
+create table tb1(
+id int identity(1,2)primary key,
+name varchar (100)not null,
+address varchar(100),
+result float,
+age int 
+)
+insert into tb1 values('monir','raj',4.00,21)
+insert into tb1 values('azam','london',3.33,21)
+create database customar
+
+create table tb1(
+id int identity(1,2)primary key,
+firstname varchar(100) not null,
+lastname varchar(100) not null,
+address varchar(100),
+age int,
+salary int
+)
+insert into tb1 values('ramesh','lal','dhaka',23,20000)
+insert into tb1 values('sanjir','shisir','rajshahi',25,30000)
+insert into tb1 values('sujit','kumar','nouga',26,310000)
+insert into tb1 values('rashida','akther','rajshahi',24,33000)
+insert into tb1 values('shamim','ahmed','nator',45,60000)
+insert into tb1 values('arifa','ferdoshi','dhaka',35,65000)
+select firstname,lastname,age,salaryfrom tb1

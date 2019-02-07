@@ -1,0 +1,39 @@
+create database hm
+
+create table Teacher(
+Tid int identity(1,1) primary key,
+firstname varchar(100) not null,
+lastname varchar(100) not null,
+dept varchar(100),
+age int,
+salary int
+)
+insert into Teacher values('Meraj','Ali','cse',25,30000)
+insert into Teacher values('Sanjir','Shisir','cse',25,31000)
+insert into Teacher values('Moshiur','Rahman','eee',25,32000)
+insert into Teacher values('Faruk','Rahman','eee',24,29000)
+insert into Teacher values('Ashraful','Islam','cse',24,32000)
+
+create table Student(
+Sid int identity(1,1) primary key,
+name varchar(100) not null,
+dept varchar(100),
+semester int,
+coursecode varchar(100),
+age int,
+creditetaken int,
+teacherid int foreign key references Teacher(Tid)
+)
+insert into Student values ('Amit','CSE',7,'CSE-313',22,3,1)
+insert into Student values ('Siam','EEE',8,'EEE-316',21,3,4)
+insert into Student values ('Anik','CSE',6,'CSE-212',22,3,5)
+insert into Student values ('Niem','CSE',7,'CSE-313',22,3,1)
+insert into Student values ('Al-Amin','EEE',7,'EEE-316',22,3,2)
+insert into Student values ('Rony','EEE',6,'EEE-212',22,3,3)
+
+select firstname,Teacher.dept,Student.name,coursecode,Teacher.salary  from Teacher inner join Student ON Teacher.Tid=Student.teacherid where salary>31000
+
+select Student.name,Teacher.firstname, Student.dept,Teacher.age from Teacher inner join Student ON Teacher.Tid=Student.teacherid where Student.age>15 group by Student.dept, Student.name,Teacher.firstname ,Teacher.age
+
+delete from Student  where age<22
+select Teacher.dept,firstname from Teacher where salary=(select max(salary) from Teacher) and dept='CSE'

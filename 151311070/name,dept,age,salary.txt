@@ -1,0 +1,28 @@
+create database amit
+create table customer(
+id int not null,
+firstname varchar(500) not null,
+lastname varchar(500) not null,
+department varchar(100),
+age int not null,
+salary float not null,
+)
+
+
+insert into customer (id, firstname,lastname,department,age,salary) values(1,'Meraj','Ali','cse',25,30000)
+insert into customer (id, firstname,lastname,department,age,salary) values(2,'Sanjir','Shisir','cse',25,31000)
+insert into customer (id, firstname,lastname,department,age,salary) values(3,'Moshiur','Rahman','eee',25,32000)
+insert into customer (id, firstname,lastname,department,age,salary) values(4,'Faruk','Rahman','eee',24,29000)
+insert into customer (id, firstname,lastname,department,age,salary) values(5,'Ashraful','Islam','cse',24,32000)
+
+% 1 % select  firstname from customer where firstname like 'sa%' group by firstname
+
+% 2 % select  firstname as fullname from customer  
+
+% 3 %  SELECT SUM(firstname) FROM table_name;
+
+% 4 %  select max(salary) from customer where salary < (select max(salary) from customer)
+
+% 5 %  select max(salary) from customer where salary < (select max(salary) from customer  where salary < (select max(salary) from customer))
+
+% 6 % select sum(salary) from customer

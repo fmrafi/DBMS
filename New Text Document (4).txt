@@ -1,0 +1,89 @@
+create database AA2
+
+create table department(
+deptid int primary key,
+deptname varchar(50),
+location varchar(50)
+)
+insert into  department values(1,'IT','London')
+insert into  department values(2,'Payrol','Dhaka')
+insert into  department values(3,'cse1','rajshahi')
+insert into  department values(4,'admain','natore')
+
+
+
+create table employee(
+id int primary key,
+firstname varchar(50),
+lastname varchar(50),
+gender varchar(50),
+joiningdate date,
+salary float,departmentid int foreign key references department(deptid)
+)
+insert into  employee values(1,'sazzed','hossain','male','2016-01-04',30000,1)
+insert into  employee values(2,'samia','sultana','female','2015-01-01',25000,2)
+insert into  employee values(3,'sania','zahan','female','2015-06-07',27000,1)
+insert into  employee values(4,'m','rasel','male','2015-01-09',28000,3)
+insert into  employee values(5,'ashriful','islam','male','2016-04-05',29000,4)
+insert into  employee values(6,'saddam','hossain','male','2016-06-06',24000,2)
+insert into  employee values(7,'tanzila','zinat','female','2012-01-01',2900.5,3)
+
+
+1.  alter proc fnEmployee 
+@start int,@end int
+as
+begin 
+declare @res int
+set @res=1
+while(@start<=@end)
+begin
+set @res=@res*@start
+set @start=@start+1 
+end
+print @res
+end
+
+exec fnEmployee 1,10
+
+2. create table tbsamarry (
+id int identity(1,1),
+name varchar(50),
+dept varchar(50)
+)
+delete from [dbo].[tbsamarry]
+
+******
+alter proc fnEmployee3
+@name varchar(50),@dept varchar(50)
+as  begin
+declare @id int
+set @id=1
+while (@id<=100000)
+begin
+ insert into tbsamarry values(@id,@name,@dept )
+ set @id=@id+1
+ end
+ end
+ exec fnEmployee3 'hasan','Cse'
+ select * from tbsamarry
+ ********
+ 3. 
+ create proc spEmployee 
+@gender varchar(50),
+@departmentid int,
+@show varchar(50) output 
+ as begin
+ select (firstname+' '+lastname) as fullname,salary,deptname,gender from employee join
+ department on department.deptid=employee.departmentid 
+ where salary between 27000 and 30000 and gender=@gender and departmentid=@departmentid
+end
+
+declare @t varchar(50)
+exec spEmployee 'female', 1, @t out
+print @t
+
+
+select firstname,deptname,joiningdate, rank () over(partition by deptname order by joiningdate) as ss
+from employee join department on department.deptid=employee.departmentid
+
+

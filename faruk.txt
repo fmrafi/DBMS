@@ -1,0 +1,161 @@
+Create Database DBTrigger
+
+
+create table Department(
+Deptid int primary key,
+Deptname varchar(50),
+Location int,
+)
+
+insert into Department values (1,'IT','London')
+insert into Department values (2,'Payrol','Dhaka')
+insert into Department values (3,'CSE1','Rajshahi')
+insert into Department values (4,'Admin','Nator')
+
+Select * from Department
+
+
+Create Table Employee(
+ID int  primary key,
+Firstname varchar(50),
+Lastname varchar(50),
+Gender varchar(50),
+Joiningdate date,
+Salary float,
+Departmentid int foreign key references Department(Deptid)
+)
+
+
+insert into Employee values(1,'Sazzaz','Hossain','Male','2016-01-04',30000,1 )
+insert into Employee values(2,'Samira','Sultana','Female','2015-01-01',25000 ,2)
+insert into Employee values(3,'Sania','Zahan','Female','2015-06-07',27000 ,1)
+insert into Employee values(4,'M.','Rasel','Male','2015-01-09',28000 ,3)
+insert into Employee values(5,'Ashraful','Islam','Male','2016-04-05',29000 ,4)
+insert into Employee values(6,'Saddam','Hossain','Male','2016-06-06',24000 ,2)
+insert into Employee values(7,'Tazila','Zinat','Female','2012-01-01',2900.5 ,3)
+
+Select * from Employee
+
+
+01.
+
+Create Function FnEmployee (@start int, @end int)
+returns int
+as 
+begin
+declare @res int
+set @res=1
+while(@start<=@end)
+begin
+set @res=@res*@start
+set @start=@start+1
+end
+return @res
+end
+select dbo.fnEmployee(1,10)
+
+
+02.
+
+Create Function spEmployeesalarydetails(@gen varchar(50),@deptid int)
+returns table
+as
+return (select(Firstname+' '+ Lastname) as Fullname,Salary,Deptname,Gender from Department join
+Employee on Department.Deptid=Employee.Departmentid
+where salary between 27000 and 30000 and Gender=@gen and Departmentid =@deptid)
+
+select * from [dbo].[spEmployeesalarydetails] ('Male',1)
+
+
+
+03.
+
+create function vumax1(@max float)
+returns float
+as
+begin
+declare @maxsalary float
+set @maxsalary=(select max(salary) from Employee)
+return @maxsalary*@max
+end
+select [dbo].[vumax1] (1000)
+
+
+
+
+
+04.
+
+Create Function fnEmployee2(@Location varchar(50))
+returns table
+as
+return (select ID,Firstname,Deptname,Location from 
+Department join Employee on Department.Deptid=Employee.Departmentid
+where Location=@Location
+ )
+
+Select * from fnEmployee2('London')
+
+6.
+
+create view vuEmployeeDetails
+as
+select ID,FirstName,LastName,Gender,DeptName 
+from Employee join Department
+on
+Department.DeptID=Employee.DepartmentI
+
+insert into vuEmployeeDetails values(8,'Sagor','Chandro','Male','CSE')
+
+
+Create trigger tgEmployee
+on vuEmployeeDetails
+Instead of insert
+as
+begin
+select * from inserted
+select * from deleted
+End
+
+
+07.
+
+create  trigger ss1 on employee 
+ for insert as
+ begin
+ declare @id int
+ select @id=id from deleted
+ insert into  emp1 values
+  ('new employee id ='+ cast(@id as varchar(50)) +'is added' + cast(getdate() as varchar(20)))
+  end
+
+delete from employee where id=2
+
+
+08. 
+
+create view vuEmployeeDeptDetails
+as
+
+select ID,FirstName,Salary,DeptName 
+from Employee join Department
+on
+Department.DepID=Employee.DepartmentID
+
+
+insert into vuEmployeeDeptDetails values
+(8,'Sagor',30000,'CSE')
+
+
+Create trigger tgEmployeer
+on vuEmployeeDeptDetails
+Instead of insert
+as
+begin
+select * from inserted
+select * from deleted
+End
+
+
+
+

@@ -1,0 +1,45 @@
+create database ad
+
+create table department(
+Did int identity(1,1) primary key,
+Dname varchar(50) not null,
+Location varchar(50)
+)
+
+insert into  department values ('cse','kazla')
+insert into  department values('eee','Talaimari')
+insert into  department values ('ict','Talaimari')
+insert into  department values ('phy','kazla')
+
+create table Teacher(
+Tid int identity (2232,1) primary key,
+Tname varchar(50) not null,
+coursecode varchar(50),
+DeptId int foreign key references department(Did)
+)
+
+insert into Teacher values ('krishno','cse-313',1)
+insert into Teacher values ('Meraj','cse-314',1)
+insert into Teacher values ('Ashraful','cse-221',1)
+insert into Teacher values ('Sagor','eee-133',2)
+insert into Teacher values ('Shishir','ict-111',3)
+insert into Teacher values ('Rasel','phy-111',4)
+
+
+create table student (
+Sid int identity(101,1) primary key,
+Sname varchar(50) not null,
+semester int,
+TeacherId int foreign key references Teacher(Tid),
+DeptId int foreign key references department(Did)
+)
+
+insert into student values ('Monir',7,2232,1)
+insert into student values ('Rafi',6,2233,1)
+insert into student values ('Maya',8,2236,3)
+insert into student values ('Eja',7,2237,4)
+insert into student values ('Atik',6,2237,4)
+
+1.select Tname,Dname,coursecode,semester from department inner join student on department.Did=student.DeptId 
+ inner join Teacher on department.Did=Teacher.DeptId and teacher.Tid=student.teacherId
+  group by Tname,Dname,coursecode,semester having semester<=7

@@ -1,0 +1,3 @@
+select Teacher.FirstName,Teacher.LastName,Teacher.Dept,Teacher.Salary,Student.CourseCode ,Student.CreditTaken from Teacher 
+inner join Student on  Teacher.TID=Student.TeacherID  
+where Salary between 30000 and 40000 

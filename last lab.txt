@@ -1,0 +1,92 @@
+create database Hasan
+
+create table product(
+productId int primary key,
+productname varchar(50),
+price int
+)
+insert into product values (1,'sp1',50000)
+insert into product values (2,'sp2',50300)
+insert into product values (3,'sp3',23300)
+insert into product values (4,'sp4',22000)
+
+create table customer(
+customerId int primary key,
+customername varchar(50)
+)
+insert into customer values (10,'samim')
+insert into customer values (11,'samima')
+insert into customer values (12,'sadiq')
+insert into customer values (13,'sajid')
+
+create table reseller (
+resellerId int primary key,
+resellername varchar(50),
+commissionrate int
+)
+
+insert into reseller values (21,'safiq',10)
+insert into reseller values (22,'sahin',15)
+insert into reseller values (23,'sahid',16)
+insert into reseller values (24,'sakib',20)
+
+create table commission(
+commissionId int primary key,
+customerId int foreign key references customer(customerId),
+productId int  foreign key references product(productId),
+resellerId int foreign key references reseller(resellerId),
+commissionAmaunt int
+)
+
+insert into commission values (31,10,1,21,30)
+insert into commission values (32,11,2,22,25)
+insert into commission values (33,10,4,23,20)
+insert into commission values (34,12,3,24,35)
+
+create table purchase(
+purchaseId int primary key,
+customerId int foreign key references customer(customerId),
+productId int  foreign key references product(productId),
+purchasedate date,
+quantity int,
+chargeamaunt int,
+paidamaunt int
+)
+
+insert into purchase values (41,10,1,'1-04-2016',3,550,550)
+insert into purchase values (42,11,2,'2-04-2016',2,100,110)
+insert into purchase values (43,10,1,'7-04-2016',6,350,350)
+insert into purchase values (44,12,3,'6-04-2016',4,290,260)
+
+
+
+3.   select resellername,customername,productname, rank() over( order by quantity desc)
+  as quantityRank from commission join customer on 
+  customer.customerid=commission.customerId join product on 
+  product.productId=commission.productId join reseller  on reseller.resellerid=commission.resellerid
+  join purchase on  product.productId=purchase.productId
+
+  4. alter view vuEmployee1 as
+  select customername,price,paidamaunt,purchasedate,commissionAmaunt,quantity from purchase join
+  customer on customer.customerid=purchase.customerId join product on 
+  product.productId=purchase.productId join commission on customer.customerid=commission.customerid where  price between 280 and 5000
+
+  select * from vuEmployee1
+
+  5. alter view vuEmployee as
+  select customername,resellername,commissionAmaunt,productname,purchasedate,price,quantity from purchase join
+  customer on customer.customerid=purchase.customerId join product on 
+  product.productId=purchase.productId join commission  on customer.customerid=commission.customerid
+   join reseller on reseller.resellerid=commission.resellerid  where purchasedate 
+    between '01/04/2016' and '06/06/2016'
+
+	select * from vuEmployee
+
+	6.  select productname from commission join reseller on  
+	reseller.resellerid=commission.resellerid join product on 
+	product.productId=commission.productId where commissionrate>10
+
+	7. select customername,productname from purchase join 
+	customer on customer.customerid=purchase.customerid join
+	 product on product.productId=purchase.productId where 
+	 quantity= (select max(quantity) as maxquantity from purchase where customername like  's%' )

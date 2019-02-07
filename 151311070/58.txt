@@ -1,0 +1,49 @@
+create database hhh
+
+create table Teacher(
+Tid int identity(1,1) primary key,
+firstname varchar(100) not null,
+lastname varchar(100) not null,
+dept varchar(100),
+age int,
+salary int
+)
+insert into Teacher values('Meraj','Ali','cse',25,30000)
+insert into Teacher values('Sanjir','Shisir','cse',24,31000)
+insert into Teacher values('Moshiur','Rahman','eee',23,29000)
+insert into Teacher values('Symun','islam','eee',24,36000)
+insert into Teacher values('Sazzad','Islam','ece',22,28000)
+insert into Teacher values('Samia','sultana','cse',26,38000)
+insert into Teacher values('Arifa','ferdousi','ece',30,50000)
+
+create table Student(
+Sid int identity(1,1) primary key,
+name varchar(100) not null,
+dept varchar(100),
+semester int,
+coursecode varchar(100),
+age int,
+creditetaken int,
+teacherid int foreign key references Teacher(Tid)
+)
+insert into Student values ('Noor','CSE',7,'CSE-313',22,3,1)
+insert into Student values ('Arko','EEE',6,'EEE-231',21,4,7)
+insert into Student values ('Ratul','ECE',8,'ECE-341',22,3,5)
+insert into Student values ('Toru','EEE',5,'EEE-221',20,4,4)
+insert into Student values ('Rashmi','CSE',7,'CSE-314',23,1,1)
+insert into Student values ('Sanjida','ECE',6,'ECE-231',22,3,7)
+insert into Student values ('Mamun','CSE',7,'CSE-316',24,4)
+
+1. select firstname,lastname,teacher.dept,salary,semester,coursecode,creditetaken from student inner join teacher on teacher.Tid=student.teacherId
+2. update teacher set dept=case when dept='cse' then 'EEE'
+  else 'cse' END
+
+3. 
+4.  select firstname,lastname,teacher.dept,salary,coursecode,creditetaken from student inner join teacher on teacher.Tid=student.teacherId where salary between 30000 and 40000
+5. select firstname,lastname,teacher.dept,salary,semester,coursecode,creditetaken from student right join teacher on teacher.Tid=student.teacherId
+6. select firstname,teacher.dept,salary,semester,coursecode,creditetaken from student inner join teacher on teacher.Tid=student.teacherId order by semester ASC
+7. select firstname,teacher.dept,salary,semester,coursecode,creditetaken from student inner join teacher on teacher.Tid=student.teacherId order by creditetaken DESC
+8.  delete from student where name='Arko' and semester=6
+9.  delete 
+10. select coursecode,creditetaken, max(salary) as totalsalary from student inner join teacher on teacher.Tid=student.teacherId where coursecode like '%31' group by  coursecode,creditetaken
+11. 

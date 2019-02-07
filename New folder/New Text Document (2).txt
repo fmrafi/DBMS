@@ -1,0 +1,31 @@
+create database VUSTART
+
+
+create table Teacher (
+
+TID int identity(1,1) primary key,
+FirstName varchar(50) not null,
+LastName varchar(50) not null,
+Dept varchar(50) not null,
+Age int not null,
+Salary float not null
+)
+
+select * from Teacher
+insert into Teacher (FirstName,LastName,Dept,Age,Salary) values('Arifa','Ferdousi','ECE',30,50000)
+
+create table Student
+(
+SID int identity(1,1) primary key,
+Name varchar(50) not null,
+Department varchar(50) not null,
+Semester int not null,
+CourseCode varchar(50) not null,
+Age int not null,
+CreditTaken int not null,
+TeacherID  int foreign key references Teacher(TID)
+)
+select * from Student
+
+insert into Student(Name,Department,Semester,CourseCode,Age,CreditTaken,TeacherID) 
+val

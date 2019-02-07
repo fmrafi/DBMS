@@ -1,0 +1,24 @@
+create table customer(
+Tid int identity(1,1) primary key,
+firstname varchar(100) not null,
+lastname varchar(100) not null,
+department varchar(100),
+age int,
+salary int
+)
+insert into customer values('Meraj','Ali','cse',25,30000)
+insert into customer values('Sanjir','Shisir','cse',25,31000)
+insert into customer values('Moshiur','Rahman','eee',25,32000)
+insert into customer values('Faruk','Rahman','eee',24,29000)
+insert into customer values('Ashraful','Islam','cse',24,32000)
+
+select * from customer where firstname like'sa%'
+select firstname as fullname from customer
+select firstname+' '+lastname as fulname from customer where len(lastname)>=5 
+select max(salary) from customer where salary<(select max(salary) from customer)
+select max(salary) from customer where salary <(select max(salary) from customer where salary<(select max(salary) from customer) )
+
+select age,department from customer where age>15 group by department,age
+select count(department),department from customer group by department
+
+alter table customer add address varchar(50)

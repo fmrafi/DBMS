@@ -1,0 +1,1 @@
+insert into tbl_country values('a','aa')

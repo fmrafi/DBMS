@@ -1,0 +1,41 @@
+create database aa
+
+create table department(
+deptid int identity(1,1) primary key,
+deptname varchar(100) ,
+location varchar(100) 
+)
+
+insert into department values('it','london')
+insert into department values('payrol','dhaka')
+insert into department values('cse1','rajshahi')
+insert into department values('admin','nator')
+
+
+create table employee(
+id int primary key,
+name varchar(100) not null,
+salary int,
+gender varchar(100) not null,
+departmentid int foreign key references department(deptid)
+)
+
+insert into employee values(2,'meraj',40000,'male',3)
+insert into employee values(3,'ben',4800,'male',3)
+insert into employee values(4,'hossain',3000,'male',1)
+insert into employee values(5,'alom',400,'male',1)
+insert into employee values(6,'hero alam',40000,'male',3)
+insert into employee values(7,'bob',50000,'male',3)
+insert into employee values(8,'gail',40000,'male',3)
+
+1.1. create view vwemployee_salary_details with schemabinding as
+ select deptname,count_big(*) as countr,avg(isnull(salary,0)) as avgsalary,sum(isnull(salary,0)) as sumsalary
+  from dbo.department join dbo.employee on department.deptid=employee.departmentid
+  group by deptname
+
+  select * from vwemployee_salary_details
+
+2.  create view vwEmployeeDetails with schemabinding as
+  select name,gender,deptname,salary from dbo.department
+  inner join dbo.employee on department.deptid=employee.departmentid
+where salary between 5000 and 50000
